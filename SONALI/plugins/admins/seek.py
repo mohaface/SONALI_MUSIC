@@ -8,12 +8,12 @@ from SONALI.utils import AdminRightsCheck, seconds_to_min
 from SONALI.utils.inline import close_markup
 from config import BANNED_USERS
 
+# Commands
+SEEK_COMMAND = get_command("SEEK_COMMAND")
 
-@app.on_message(
-    filters.command(["seek", "cseek", "seekback", "cseekback"])
-    & filters.group
-    & ~BANNED_USERS
-)
+
+@app.on_message(filters.command(SEEK_COMMAND ,
+        prefixes=["", "/"]) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def seek_comm(cli, message: Message, _, chat_id):
     if len(message.command) == 1:
