@@ -9,10 +9,12 @@ from SONALI.utils.decorators import AdminRightsCheck
 from SONALI.utils.inline import close_markup
 from config import BANNED_USERS
 
+# Commands
+SHUFFLE_COMMAND = get_command("SHUFFLE_COMMAND")
 
-@app.on_message(
-    filters.command(["shuffle", "cshuffle"]) & filters.group & ~BANNED_USERS
-)
+
+@app.on_message(filters.command(SHUFFLE_COMMAND ,
+        prefixes=["", "/"]) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def admins(Client, message: Message, _, chat_id):
     check = db.get(chat_id)
