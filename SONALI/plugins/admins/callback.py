@@ -136,7 +136,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                         return await CallbackQuery.answer(
                             _["admin_14"], show_alert=True
                         )
-    if command == "Pause":
+    if command == "Pause" or command == "بعدی":
         if not await is_music_playing(chat_id):
             return await CallbackQuery.answer(_["admin_1"], show_alert=True)
         await CallbackQuery.answer()
@@ -145,7 +145,7 @@ async def del_back_playlist(client, CallbackQuery, _):
         await CallbackQuery.message.reply_text(
             _["admin_2"].format(mention),
         )
-    elif command == "Resume":
+    elif command == "Resume" or command == "ادامه":
         if await is_music_playing(chat_id):
             return await CallbackQuery.answer(_["admin_3"], show_alert=True)
         await CallbackQuery.answer()
@@ -154,16 +154,16 @@ async def del_back_playlist(client, CallbackQuery, _):
         await CallbackQuery.message.reply_text(
             _["admin_4"].format(mention),
         )
-    elif command == "Stop" or command == "End":
+    elif command == "Stop" or command == "End" or command == "اتمام":
         await CallbackQuery.answer()
         await RAUSHAN.stop_stream(chat_id)
         await set_loop(chat_id, 0)
         await CallbackQuery.message.reply_text(
             _["admin_5"].format(mention),
         )
-    elif command == "Skip" or command == "Replay":
+    elif command == "Skip" or command == "Replay" or command == "بعدی":
         check = db.get(chat_id)
-        if command == "Skip":
+        if command == "Skip","بعدی":
             txt = f"➻ sᴛʀᴇᴀᴍ sᴋɪᴩᴩᴇᴅ 🎄\n│ \n└ʙʏ : {mention} 🥀"
             popped = None
             try:
@@ -421,3 +421,24 @@ async def markup_timer():
 
 
 asyncio.create_task(markup_timer())
+
+
+__MODULE__ = "دستورات مدیر"
+__HELP__ = """
+<b>c نمایانگر پخش کانال است.</b>
+
+<b>✧ /pause /توقف</b> یا <b>/cpause /کانال توقف</b> - پخش موسیقی در حال پخش را متوقف کنید.
+<b>✧ /resume /ادامه</b> یا <b>/cresume /کانال ادامه</b> - موسیقی متوقف‌شده را از سر بگیرید.
+<b>✧ /mute /بی‌صدا</b> یا <b>/cmute /کانال بی‌صدا</b> - موسیقی در حال پخش را بی‌صدا کنید.
+<b>✧ /unmute /صدا</b> یا <b>/cunmute /کانال صدا</b> - موسیقی بی‌صدا شده را دوباره صدا دار کنید.
+<b>✧ /skip /رد کردن</b> یا <b>/cskip /کانال رد کردن</b> - موسیقی در حال پخش را رد کنید.
+<b>✧ /stop /متوقف کردن</b> یا <b>/cstop /کانال متوقف کردن</b> - موسیقی در حال پخش را متوقف کنید.
+<b>✧ /shuffle /تصادفی</b> یا <b>/cshuffle /کانال تصادفی</b> - لیست پخش در حال انتظار را به‌طور تصادفی جابجا کنید.
+<b>✧ /seek /جستجو به جلو</b> یا <b>/cseek /کانال جستجو به جلو</b> - موسیقی را به مدت زمان دلخواه جلو ببرید.
+<b>✧ /seekback /جستجو به عقب</b> یا <b>/cseekback /کانال جستجو به عقب</b> - موسیقی را به مدت زمان دلخواه به عقب ببرید.
+<b>✧ /reboot /راه‌اندازی مجدد</b> - ربات را برای چت شما راه‌اندازی مجدد کنید.
+
+<b>✧ /skip /رد کردن</b> یا <b>/cskip /کانال رد کردن</b> [شماره (مثال: 𝟹)] - موسیقی را به شماره دلخواه در لیست انتظار رد می‌کند. مثال: <b>/skip 𝟹</b> موسیقی را به سومین موسیقی در لیست انتظار رد می‌کند و موسیقی‌های شماره 𝟷 و 𝟸 را نادیده می‌گیرد.
+
+<b>✧ /loop /حلقه</b> یا <b>/cloop /کانال حلقه</b> [فعال/غیرفعال] یا [شماره‌های بین 𝟷-𝟶] - هنگامی که فعال باشد، ربات موسیقی در حال پخش را به تعداد 𝟷-𝟶 بار در چت صوتی تکرار می‌کند. پیش‌فرض به تعداد 𝟷𝟶 بار است.
+"""
