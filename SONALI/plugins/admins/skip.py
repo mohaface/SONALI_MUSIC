@@ -13,11 +13,12 @@ from SONALI.utils.thumbnails import get_thumb
 from config import BANNED_USERS
 
 
-@app.on_message(
-    filters.command(["skip", "cskip", "next", "cnext"], prefixes=["/", "!", "."])
-    & filters.group
-    & ~BANNED_USERS
-)
+# Commands
+SKIP_COMMAND = get_command("SKIP_COMMAND")
+
+
+@app.on_message(filters.command(SKIP_COMMAND ,
+        prefixes=["", "/"]) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def skip(cli, message: Message, _, chat_id):
     if not len(message.command) < 2:
