@@ -11,8 +11,12 @@ from SONALI.utils.database import (
     remove_active_video_chat,
 )
 
+# Commands
+ACTIVEVC_COMMAND = get_command("ACTIVEVC_COMMAND")
+ACTIVEVIDEO_COMMAND = get_command("ACTIVEVIDEO_COMMAND")
 
-@app.on_message(filters.command(["ac"]) & SUDOERS)
+
+@app.on_message(filters.command(ACTIVEVC_COMMAND , prefixes=["", "/"]) & SUDOERS)
 async def ac(c, m):
     audio = len(await get_active_chats())
     video = len(await get_active_video_chats())
